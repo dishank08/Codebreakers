@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>CodeBreakers | Register Page!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'login&Registers.css'%}">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.5;
+}
+/* Full height image header */
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('home.jpg');
+    min-height: 70%;
+}
+.w3-bar .w3-button {
+    padding: 10px 10px 5px 8px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card" id="myNavbar">
+    <a href="/home" class="w3-wide w3-button" style="font-family: Verdana; font-size:15px; text-decoration:none;"><img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;">
+      CODEBREAKERS</a>
+<!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small" style="margin:8px 5px 10px 5px;">
+      <a href="/practice" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+      <a href="/leaderboard" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>
+      <a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>
+      <a href="/contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      {% if request.user.is_authenticated %}<a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>{% else %}<a href="/login" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGIN</a>{% endif %}
+    </div>
+    <a href="javascript:void(0)" style="padding:17px; " class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-right" onclick="w3_open()">
+      <i class="fa fa-bars"></i> </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large w3-padding-16" style="display:none;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"><i class="fa fa-close"></i> Close</a>
+  <a href="/practice" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+ <!-- <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">COMPETE</a> -->
+  <a href="/leaderboard" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a> 
+  <a href="/profile" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>
+   <a href="/contact" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+  {% if request.user.is_authenticated %}<a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>{% else %}<a href="/login" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGIN</a>{% endif %}
+</nav>
+<div id="registerbox">
+      <form action="/addstudentinfo/" method="POST" style="font-family: Raleway">{% csrf_token %}  
+        <h1>Sign Up</h1>
+        <h6 style="font-family:verdana;">Username :<input type="text" name="username" placeholder="Enter Username" required="true">
+        Email Id :<input type="text" name="email" placeholder="Enter Email id" required="true">
+        Password :<input type="Password" name="password1" placeholder="Enter Password" required="true">
+         <p style="color:#88f050; font-size:12px;  padding-bottom:10px; font-family:monospace; ">* Minimum 8 digits including chars & nums<br>* Should not include Username</p>
+        Confirm Password :<input type="Password" name="password2" placeholder="Re-Enter Password" required="true">
+         <p style="color:#88f050; font-size:12px; padding-bottom:10px; font-family:monospace;">* Same as above</p>
+        <input type="Submit" name="submit" value="Sign Up">
+        <a href="/login/">Click here to login !!</a>
+      </form>
+      <br>
+      <span style="color:#88f050" id="msg"></span></h6>
+      <script type="text/javascript">
+          var url=window.location.search;
+          var s=url.substr(5,url.length);
+          var u=s.replace(/_/gi," ");
+          document.getElementById("msg").innerHTML=u;
+      </script>
+    </div>
+  <script>
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+    } else {
+        mySidebar.style.display = 'block';
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+</script>
+</body>
+</html>

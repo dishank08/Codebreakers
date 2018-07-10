@@ -1,0 +1,147 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<title>CodeBreakers | Code Here!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.5;
+}
+.w3-bar .w3-button {
+     padding: 10px 10px 5px 8px;
+}
+
+.notes {
+    background-attachment: local;
+    background-color:black;
+    line-height: 26px; 
+
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card" id="myNavbar">
+    <a href="/home" class="w3-wide w3-button" style="font-family: Verdana; font-size:15px; text-decoration:none;"><img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;">
+      CODEBREAKERS</a><!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small" style="margin:8px 5px 10px 5px;">
+      <a href="/practice" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+      <a href="/leaderboard" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>
+      <a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>
+      <a href="/contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      <a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    <a href="javascript:void(0)" style="padding:17px; " class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-right" onclick="w3_open()">
+      <i class="fa fa-bars"></i> </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large w3-padding-16" style="display:none;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"><i class="fa fa-close"></i> Close</a>
+  <a href="/practice" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+ <!-- <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">COMPETE</a> -->
+  <a href="/leaderboard" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>  <a href="/profile" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>
+  <a href="/contact" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+  <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+</nav>
+
+ <div style="padding-top: 45px;" class="container"> 
+  <form action="/execute/" method="post"> {% csrf_token %}
+    <h3 style="font-size: 27px;">Choose the language : <select class="w3-button w3-green w3-round" style="font-size:15px;" name="language" onclick="change(value);"><option value="11">C</option><option value="1">C++</option><option value="4">Python</option><option value="10">Java</option></select></h3>
+    <h2> Code Here:</h2>
+    <textarea id="text" name="sourcecode" rows=12 cols=60 style="font-family:monospace; color:white;  " class="notes">
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+
+
+   return 0;
+}
+    </textarea><br>
+    <input style="font-size: 15px" class="w3-button w3-green w3-round w3-padding-large w3-margin-top" type="submit" value="submit"/> 
+     <h2 style="color:blue; font-size:20px; font-family:Verdana; line-height:1.8;">{{q}}<br>{{q1}}</h2><br>
+    {% if msg != "xyz" %}
+    {% if q != "Compilation error" and q != "Runtime error" %}
+    <table class="table table-striped" style="font-family: monospace; width:330px;">
+    <tr><th colspan="3">Input:</th></tr>
+    <tr><td></td><td colspan="3">{{q2}}</td></tr>
+    <tr><th colspan="3">
+    Output:</th></tr>
+      <tr><td></td><th>Expected:</th><td>{{q3}}</td></tr>
+      <tr><td></td><th>Got:</th><td>{{q4}}</td></tr>
+    {% endif %}
+    {% endif %}
+    </form>
+  </table>
+  <br><br>
+</div>
+<center>
+<h4>
+<img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;"><b style="font-family:Verdana;"> CodeBreakers</b></center></h4>
+<div class="w3-bar w3-green"><p1 class="w3-right" style="font-family: Verdana; font-size:20px;"><i class="fa fa-facebook"></i>       <i class="fa fa-instagram"></i>       <i class="fa fa-linkedin"></i>       <i class="fa fa-twitter"></i>&nbsp;&nbsp;</p1></div>
+<script>
+	function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+    } else {
+        mySidebar.style.display = 'block';
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+
+function change()
+{
+  var x=document.getElementById("text");
+   if (arguments[0] == 1)
+  {
+  	x.innerHTML = "#include <iostream>\nusing namespace std;\nint main()\n{\n\n\n   return 0;\n}";
+ 
+  }
+  else if (arguments[0] == 11)
+  {
+  	x.innerHTML = "#include<stdio.h>\n#include<stdlib.h>\n#include<string.h>\nint main()\n{\n\n\n   return 0;\n}";
+  	
+  } 
+  else if (arguments[0] == 4)
+  {
+  	x.innerHTML = "#write your python code here";
+  	
+  }
+  else if (arguments[0] == 10)
+  {
+  	x.innerHTML = "import java.util.Scanner;\nimport java.lang.*;\nimport java.io.*;\nclass Xyz\n{\n    public static void main(String[] args) throws java.lang.Exception\n    {\n\n\n    }\n}";	
+  }
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>CodeBreakers | Contact Us!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.5;
+}
+.w3-bar .w3-button {
+    padding: 10px 10px 5px 8px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card" id="myNavbar">    
+    <a href="/home" class="w3-wide w3-button" style="font-family: Verdana; font-size:15px; text-decoration:none;"><img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;">
+      CODEBREAKERS</a>
+<!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small" style="margin:8px 5px 10px 5px;">
+      <a href="/practice" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+      <a href="/leaderboard" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>
+      {% ifnotequal request.session.username 'dishank1' %}<a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>{% endifnotequal %}
+      <a href="/contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      <a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+    </div>
+    <a href="javascript:void(0)" style="padding:17px; " class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-right" onclick="w3_open()">
+      <i class="fa fa-bars"></i> </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left  w3-display-topleft w3-hide-medium w3-hide-large w3-padding-16" style="display:none;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"><i class="fa fa-close"></i> Close</a>
+  <a href="/practice" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+ <!-- <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">COMPETE</a> -->
+  <a href="/leaderboard" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>  {% ifnotequal request.session.username 'dishank1' %}<a href="/profile" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>{% endifnotequal %}
+  <a href="/contact" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+  <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+</nav>
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:70px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m4">
+      <p></p>
+    </div>
+      <div class="w3-col m4">
+      <!-- Profile --> 
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h1 class="w3-center"><img style="height:220px; width: 240px; border-radius:50%;" src="{% static 'admin.jpg' %}"></h1>
+         <h3 class="w3-center">Dishank Khatri</h3>
+         <hr>
+         <h6 style="font-family: Verdana; font-size:14px; "><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Admin , Developer<br><br><i class="fa fa-institution fa-fw w3-margin-right w3-text-theme"></i> Student of Computer engineering<br><br><span style="padding-left:40px;">DDU , Nadiad.</span><br><br>
+        <i class="fa fa-paper-plane fa-fw w3-margin-right w3-text-theme" style="padding-bottom:7px; "></i> dishank.kd1998@gmail.com </h6>
+        </div>
+      </div>
+      <br>
+  {% if request.session.username != 'dishank1' %}
+    <form action="/feedback/" method="post"> {% csrf_token %}  
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <h5 style="font-family: Verdana; padding-bottom:7px;">Give your valuable Feedback to us :</h5>
+          <textarea name="feedback" style="height:70px; width:100%; font-family: Verdana;" placeholder="Write here ..."></textarea>
+        <input style="font-size: 15px;" class="w3-button w3-green w3-round w3-margin-top" type="submit" value="submit"/>
+        <h5></h5>
+        {% if msg %}
+        <div style="padding-bottom:10px;">
+        <div class="w3-bar w3-green w3-round" style="height:28px; width:100%;"><span style="font-size:14px; font-family:Verdana;">&nbsp;&nbsp;<i class="fa fa-check"></i> {{msg}}</span></div> 
+      </div>
+         {%endif%}
+    </div>
+
+    </form>
+   {% endif%}
+</div>
+</div>
+<br>
+</div>
+</div>
+<br>
+<center>
+  <h4>
+<img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;"><b style="font-family:Verdana;"> CodeBreakers</b></center></h4>
+<div class="w3-bar w3-green"><p1 class="w3-right" style="font-family: Verdana; font-size:20px;"><i class="fa fa-facebook"></i>       <i class="fa fa-instagram"></i>       <i class="fa fa-linkedin"></i>       <i class="fa fa-twitter"></i>&nbsp;&nbsp;</p1></div>
+      <script>
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+    } else {
+        mySidebar.style.display = 'block';
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+</script>
+</body>
+</html>

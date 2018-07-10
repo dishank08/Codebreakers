@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>CodeBreakers | Practice Page!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.5;
+}
+/* Full height image header */
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+    background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url(home.jpg);
+    min-height: 70%;
+}
+.w3-bar .w3-button {
+    padding: 10px 10px 5px 8px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card" id="myNavbar">
+  <a href="/home" class="w3-wide w3-button" style="font-family: Verdana; font-size:15px; text-decoration:none;"><img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;">
+      CODEBREAKERS</a>
+<!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small"  style="margin:8px 5px 10px 5px;">
+      <a href="" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+      <a href="/leaderboard" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>
+      {% ifnotequal request.session.username 'dishank1' %}<a href="/profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>{% endifnotequal %}
+      <a href="/contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      <a href="/logout" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+    </div>
+    <a href="javascript:void(0)" style="padding:17px; " class="w3-bar-item w3-button w3-hide-large w3-hide-medium w3-right" onclick="w3_open()">
+      <i class="fa fa-bars"></i> </a>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large w3-padding-16" style="display:none;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"><i class="fa fa-close"></i> Close</a>
+  <a href="/practice" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-desktop"></i> PRACTICE</a>
+ <!-- <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">COMPETE</a> -->
+  <a href="/leaderboard" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-list"></i> LEADERBOARD</a>  {% ifnotequal request.session.username 'dishank1' %}<a href="/profile" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-user"></i> PROFILE</a>{% endifnotequal %}
+   <a href="/contact" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+  <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button"><i class="fa fa-power-off"></i> LOGOUT</a>
+</nav>
+  <div class="container">
+  <h2 style="padding-top: 48px">Questions:</h2>
+  <div class="w3-hide-small">
+  <table id="table1" class="table table-striped w3-mobile" style="font-size: 20px;" colspan="3">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Level</th>
+        <th>Max.Marks</th>
+        {% if request.session.username == 'dishank1' %}
+        <th>Delete!!</th>
+        {% else %}
+        <th>Solve!!</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td><a href="/practice/hcode?qname={{i.question_name}}">{{i.question_name}}</a></td>
+        <td>{{i.q_level}}</td>
+        <td>{{i.max_marks}}</td>
+        {% if request.session.username == 'dishank1' %}
+        <td>
+        <a href="/deleteq/?qname={{i.question_name}}">delete</a>
+      </td>
+         {% else %}
+        <td> 
+          <a href="/practice/hcode?qname={{i.question_name}}" style="color:green;">
+          {% for j in info %}
+          {% if j.question_Id_id == i.question_Id %}
+               <a href="/practice/hcode?qname={{i.question_name}}" style="color: red;">
+          {% endif %}      
+        {% endfor %}
+        Solve!!</a>
+      </td>
+      {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="w3-hide-medium w3-hide-large">
+  <table id="table1" class="table table-striped w3-mobile">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Level</th>
+        <th>Max.Marks</th>
+        {% if request.session.username == 'dishank1' %}
+        <th>Delete!!</th>
+        {% else %}
+        <th>Solve!!</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td><a href="/practice/hcode?qname={{i.question_name}}">{{i.question_name}}</a></td>
+        <td>{{i.q_level}}</td>
+        <td>{{i.max_marks}}</td>
+        {% if request.session.username == 'dishank1' %}
+        <td>
+        <a href="/deleteq/?qname={{i.question_name}}">delete</a>
+      </td>
+         {% else %}
+        <td> 
+          <a href="/practice/hcode?qname={{i.question_name}}" style="color:green;">
+          {% for j in info %}
+          {% if j.question_Id_id == i.question_Id %}
+               <a href="/practice/hcode?qname={{i.question_name}}" style="color: red;">
+          {% endif %}      
+        {% endfor %}
+        Solve!!</a>
+      </td>
+      {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+    <!-- <script>
+          var row=document.getElementById('table1').rows.length;
+          for (var i=0; i<row; i++) {
+            if (document.getElementById('table1').rows[i].cells.length < 4) {
+              document.write("<td><a href="/practice/hcode?qname={{i.question_name}}" style="color: #88f050;">Solve!!</a></td>");
+                }
+             }
+        </script> -->
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<center>
+  <h4>
+<img src="{%static 'mylogo.png'%}" style="height:40px; width:40px;"><b style="font-family:Verdana;"> CodeBreakers</b></center></h4>
+<div class="w3-bar w3-green"><p1 class="w3-right" style="font-family: Verdana; font-size:20px;"><i class="fa fa-facebook"></i>       <i class="fa fa-instagram"></i>       <i class="fa fa-linkedin"></i>       <i class="fa fa-twitter"></i>&nbsp;&nbsp;</p1></div>
+<script>
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+    } else {
+        mySidebar.style.display = 'block';
+    }
+}
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+</script>
+</body>
+</html>
