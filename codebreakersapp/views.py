@@ -330,7 +330,8 @@ def feedback(request):
 		return render(request,'contact.html',{'msg':"Feedback Sent"})
 	else:
 		return HttpResponseRedirect('/')
-		
+
+# API taken from Sphere Engine for developing compiler	
 #@login_required(login_url='/login/')	
 def execute(request):
 	c={}
@@ -338,7 +339,6 @@ def execute(request):
 	if request.session.has_key('username') and request.session['username']!='dishank1':
 	# define access parameters
 		accessToken='635261e9572cfed16a140f349c08df82'
-		# accessToken='8f7022c5db9a91c4fa8c699309094d9e'
 		endpoint='e6a34d7a.compilers.sphere-engine.com'
 		# initialization
 		client = CompilersClientV3(accessToken, endpoint)
@@ -347,10 +347,12 @@ def execute(request):
 		compiler = request.POST.get('language')
 		y=0
 		input1 = Question.objects.filter(question_Id=request.session['pcode'])
+		# Apply on all the test cases
 		for var in input1:
 			input=var.cinput
 			try:
 				response = client.submissions.create(source, compiler, input)
+				# Response from API
 				x=var.Eoutput
 				id=response['id']
 				
